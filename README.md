@@ -8,51 +8,57 @@ Instructions to run the pipeline from a fresh clone:
 
 ```bash
 #1. Clone the repository
-git clone https://github.com/{username}/wvu-ieng-331-m2-{team_number}.git
-cd wvu-ieng-331-m2-{team_number}
-#2. Install dependecies using uv
+git clone https://github.com/lilypowell/wvu-ieng-331-m2-5.git
+cd wvu-ieng-331-m2-5
+#2. Install dependencies using uv
 uv sync
-#3. place olist.duckdb in the data/ directory
+#3. Place olist.duckdb in the data/ directoryy
 #4. Run the default analysis
-uv run wvu-ieng-331-m2-{team_number}
-#5. Run a parameteriazed analysis
-uv run wvu-ieng-331-m2-{team_number} --start-date 2026-01-01 --seller-state SP
+uv run wvu-ieng-331-m2-5
+#5. Run a parameterized analysis
+uv run wvu-ieng-331-m2-5 --start-date 2024-01-01 --end-date 2024-12-31
 ```
 
 ## Parameters
 
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `--db-path` | string | data/olist.duckdb | Path to the DuckDb database file |
-| `--start-date` | date | None (no filter) | Filters orders occuring after this date (YYYY-MM-DD) |
-| `--end-date` | date | None (no filter) | Filters orders occuring after this date (YYYY-MM-DD) |
-| `--seller-state | string | none | Filters results to a specific Brazilian state |
+| `--db-path` | string | data/olist.duckdb | Path to the DuckDB database file |
+| `--start-date` | date | None (no filter) | Filters orders occurring on or after this date (YYYY-MM-DD) |
+| `--end-date` | date | None (no filter) | Filters orders occurring on or before this date (YYYY-MM-DD) |
 
 ## Outputs
 
-summary.csv: Aggregated table providing high-level metrics for quick review
-detail.parquet: Comprehensive, columnar dataset containing the full results of the analysis
-chart.html: Interactive Altair visualization displaying top product categories by revenue
+- `summary.csv`: Aggregated table providing high-level metrics for quick review  
+- `detail.parquet`: Comprehensive dataset containing the full analysis results  
+- `chart.html`: Interactive Altair visualization of top product categories by revenue  
 
 ## Validation Checks
 
-Schema Verification: Ensures all 9 tables exist in database
-Completeness Check: Ensures key indetity columns do not contain null values
-Temporal Sanity: Verifies that order dates are not empty
-Volume Threshold: Confirms core tables meet minimum row count requirements
+Schema Verification: Ensures all 9 tables exist in the database  
+
+Completeness Check: Ensures key identity columns do not contain null values  
+
+Temporal Sanity: Verifies that order dates are not empty  
+
+Volume Threshold: Confirms core tables meet minimum row count requirements  
 
 ## Analysis Summary
 
-Focused on finding primary drivers of revenue within the Olist:
-Top Categorie: "bed_bath_table" and "health_beauty" drive the largest share of total revenue.
-Revenue Concentrarion: small percentage of sellers in specific states contribute disproportionately to the total order volume.
-AOV Trends: Average order value changes significantly between product categories, suggesting varied customer purchasing power across different segments.
+This analysis focuses on identifying the primary drivers of revenue within the Olist dataset.
 
+Top Categories: "bed_bath_table" and "health_beauty" generate the largest share of total revenue.
+
+Revenue Concentration: A small number of categories contribute disproportionately to total revenue, indicating a concentrated sales distribution.
+
+AOV Trends: Average order value varies significantly across product categories, suggesting differences in customer purchasing behavior across segments.
 
 ## Limitations & Caveats
 
-Data Quality: The pipeline assumes the underlying DuckDB file follows the Olist schema; significant schema changes require query updates.
-Memory Constraint: Large-scale data ranges utilize in-memory polars processing and performance may degrade.
-Data Precison: Filters are applied based on the order_purchase_timestamp and results may vary slightly if comparing against shipping or delivery dates.
+Data Range Constraint: The dataset has been date-shifted. The valid order purchase date range is approximately **2023-11-05 to 2025-12-17**, so date filters must fall within this range. Using dates outside this window may return no results.
 
-# *** The dataset has been date-shifted. The valid order purchase date range is approximately 2023-11-05 to 2025-12-17, so date filters must fall within this range. Using dates outside this window may return no results.
+Data Quality: The pipeline assumes the underlying DuckDB file follows the Olist schema; significant schema changes require query updates.
+
+Memory Constraint: Large-scale data ranges utilize in-memory Polars processing and performance may degrade.
+
+Data Precision: Filters are applied based on the order_purchase_timestamp and results may vary slightly if comparing against shipping or delivery dates.
