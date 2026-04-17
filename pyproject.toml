@@ -1,10 +1,11 @@
 [project]
 name = "wvu-ieng-331-m2-5"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Python project that analyzes the olist dataset using SQL and DuckDB."
 readme = "README.md"
 authors = [
     { name = "Lily Powell", email = "lcp00008@mix.wvu.edu" }
+    { name = "Olivia Donoghue", email = "ogd00007@mix.wvu.edu" }
 ]
 requires-python = ">=3.13"
 dependencies = [
