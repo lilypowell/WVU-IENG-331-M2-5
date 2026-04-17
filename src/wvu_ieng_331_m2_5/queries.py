@@ -91,18 +91,23 @@ def run_sql_query(
 
 def get_category_revenue_analysis(
     db_path: str | Path,
+    start_date: str | None = None,
+    end_date: str | None = None,
 ) -> pl.DataFrame:
-    """Run the category revenue analysis query.
+    """Run the category revenue analysis query with optional date filters.
 
     Args:
         db_path: Path to the DuckDB database file.
+        start_date: Optional lower bound for order purchase date.
+        end_date: Optional upper bound for order purchase date.
 
     Returns:
-        Category revenue analysis as a Polars DataFrame.
+        Category revenue results as a Polars DataFrame.
     """
     return run_sql_query(
         db_path=db_path,
         sql_filename="category_revenue_analysis.sql",
+        params=[start_date, end_date],
     )
 
 

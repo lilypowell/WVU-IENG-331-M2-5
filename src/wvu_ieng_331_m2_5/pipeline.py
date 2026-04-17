@@ -13,14 +13,22 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Milestone 2 Data Pipeline")
     parser.add_argument("--db-path", default="data/olist.duckdb")
     parser.add_argument("--seller-state", default=None)
+    parser.add_argument("--start-date", default=None)
+    parser.add_argument("--end-date", default=None)
 
     args = parser.parse_args()
 
     logger.info("Starting pipeline")
     logger.info(f"Database path: {args.db_path}")
     logger.info(f"Seller state filter: {args.seller_state}")
+    logger.info(f"Start date filter: {args.start_date}")
+    logger.info(f"End date filter: {args.end_date}")
 
-    df = get_category_revenue_analysis(args.db_path)
+    df = get_category_revenue_analysis(
+        args.db_path,
+        start_date=args.start_date,
+        end_date=args.end_date,
+    )
 
     logger.info("Query ran successfully")
     logger.info(df.head())
