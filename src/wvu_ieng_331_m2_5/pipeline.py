@@ -5,6 +5,7 @@ import altair as alt
 from loguru import logger
 
 from wvu_ieng_331_m2_5.queries import get_category_revenue_analysis
+from wvu_ieng_331_m2_5.validation import run_validation
 
 
 def main() -> None:
